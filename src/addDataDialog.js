@@ -1,17 +1,20 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-
+import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import moment from "moment";
+
 import SelectMachine from "./SelectMachine.js";
 
 class AddDataDialog extends React.Component {
   state = {
     open: false,
-    machine: ""
+    machine: "",
+    date: moment("2018-01-01")
   };
 
   handleClickOpen = () => {
@@ -32,7 +35,17 @@ class AddDataDialog extends React.Component {
       machine: this.state.machine
     });
   };
-  handleSubmit = () => {};
+  handleSubmit = () => {
+    console.log("lol");
+  };
+  onDateSelect = (event) => {
+    this.setState(({ date }) => {
+      return {
+        date: event.target.value
+      };
+    });
+    console.log(this.state.date);
+  };
   onSelectMachine = (value) => {
     this.setState(({ machine }) => {
       return {
@@ -56,6 +69,7 @@ class AddDataDialog extends React.Component {
             <SelectMachine
               onSelectMachine={this.onSelectMachine}
             ></SelectMachine>
+            <TextField id="standard-basic" label="tempo" />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
