@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Button from "@material-ui/core/Button";
 import Chart from "./chart.js";
-import AddDataField from "./addDataField.js";
+import AddDataDialog from "./addDataDialog.js";
 var extdata = [
   {
     machine: "MC101",
@@ -10,9 +10,9 @@ var extdata = [
     tg: "50",
     count: 10,
     fromDate: "2018-01-01 12:00",
-    toDate: "date2.toDate()",
-    totalhours: 40
-    //color: colorSet.getIndex(0).brighten(0)
+    toDate: "2018-01-01 14:00",
+    totalhours: 40,
+    color: "red"
   },
   {
     machine: "MC102",
@@ -84,16 +84,19 @@ class App extends React.Component {
       };
     });
   };
+  onCallModal = (item) => {
+    console.log(item);
+  };
   //
   render() {
     return (
       <div>
-        <AddDataField
+        <AddDataDialog
           addData={this.onAddData}
           variant="contained"
           color="primary"
-        ></AddDataField>
-        <Chart data={this.state.data}></Chart>
+        ></AddDataDialog>
+        <Chart data={this.state.data} callModal={this.onCallModal}></Chart>
       </div>
     );
   }

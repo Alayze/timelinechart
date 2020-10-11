@@ -55,6 +55,7 @@ class Chart extends React.Component {
       "hit",
       function (ev) {
         console.log(ev.target.dataItem.categories.categoryY);
+        this.props.callModal(ev.target.dataItem._dataContext);
       },
       this
     );
