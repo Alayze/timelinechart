@@ -4,27 +4,36 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import { FormControl } from "@material-ui/core";
 
-export default function SelectMachine() {
-  const [machine, setMachine] = React.useState("");
-  const handleChange = (event) => {
-    setMachine(event.target.value);
+class SelectMachine extends React.Component {
+  state = { machine: "" };
+  handleChange = (event) => {
+    this.setState(({ machine }) => {
+      return {
+        machine: event.target.value
+      };
+    });
+    //console.log(this.state.machine);
+    this.props.onSelectMachine(event.target.value);
   };
 
-  return (
-    <FormControl>
-      <InputLabel shrink id="demo-simple-select-label">
-        Machine
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={machine}
-        onChange={handleChange}
-      >
-        <MenuItem value={"MC101"}>macchina 101</MenuItem>
-        <MenuItem value={"MC102"}>macchina 102</MenuItem>
-        <MenuItem value={"MC109"}>macchina 109</MenuItem>
-      </Select>
-    </FormControl>
-  );
+  render() {
+    return (
+      <FormControl>
+        <InputLabel shrink id="simple-select-label">
+          Machine
+        </InputLabel>
+        <Select
+          labelId="simple-select-label"
+          id="simple-select"
+          value={this.state.machine}
+          onChange={this.handleChange}
+        >
+          <MenuItem value={"MC101"}>macchina 101</MenuItem>
+          <MenuItem value={"MC102"}>macchina 102</MenuItem>
+          <MenuItem value={"MC109"}>macchina 109</MenuItem>
+        </Select>
+      </FormControl>
+    );
+  }
 }
+export default SelectMachine;

@@ -70,15 +70,16 @@ var extdata = [
 class App extends React.Component {
   state = { data: extdata };
 
-  onAddData = () => {
+  onAddData = (task) => {
     this.setState(({ data }) => {
-      console.log(data);
-      const task = {
-        machine: "Melania",
+      //console.log(data);
+      const taskwrap = {
+        machine: task.machine,
         fromDate: "2018-01-05 16:00",
         toDate: "2018-01-06 20:00"
       };
-      const newArr = [...data, task];
+      console.log(task);
+      const newArr = [...data, taskwrap];
       return {
         data: newArr
       };
