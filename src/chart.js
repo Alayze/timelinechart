@@ -2,9 +2,12 @@ import React from "react";
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import moment from "moment";
 
 am4core.useTheme(am4themes_animated);
 
+var date1 = moment("2018-01-01 12:25:32", moment.ISO_8601);
+var date2 = moment("2018-01-01 12:25:32", moment.ISO_8601).add(40, "hours");
 class Chart extends React.Component {
   componentDidMount() {
     let chart = am4core.create("chartdiv", am4charts.XYChart);
@@ -18,8 +21,12 @@ class Chart extends React.Component {
     chart.data = [
       {
         machine: "MC101",
-        fromDate: "2018-01-01 08:00",
-        toDate: "2018-01-01 10:00",
+        article: "D0TK103",
+        tg: "50",
+        count: 10,
+        fromDate: date1.toDate(),
+        toDate: date2.toDate(),
+        totalhours: 40,
         color: colorSet.getIndex(0).brighten(0)
       },
       {
@@ -29,7 +36,7 @@ class Chart extends React.Component {
         color: colorSet.getIndex(0).brighten(0.4)
       },
       {
-        machine: "MC101",
+        machine: "MC109",
         fromDate: "2018-01-01 15:30",
         toDate: "2018-01-01 21:30",
         color: colorSet.getIndex(0).brighten(0.8)
@@ -89,7 +96,7 @@ class Chart extends React.Component {
     dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm";
     dateAxis.renderer.minGridDistance = 60;
     dateAxis.baseInterval = { count: 1, timeUnit: "hour" };
-    dateAxis.max = new Date(2019, 0, 10, 24, 0, 0, 0).getTime();
+    dateAxis.max = new Date(2018, 0, 10, 24, 0, 0, 0).getTime();
     dateAxis.strictMinMax = true;
     dateAxis.renderer.tooltipLocation = 0;
 
@@ -100,7 +107,8 @@ class Chart extends React.Component {
 
     var series = chart.series.push(new am4charts.ColumnSeries());
     series.columns.template.width = am4core.percent(80);
-    series.columns.template.tooltipText = "{article} TG:{tg} {count} pz";
+    series.columns.template.tooltipText =
+      "{article} TG:{tg} {count} pz hours{totalhours}";
 
     series.dataFields.openDateX = "fromDate";
     series.dataFields.dateX = "toDate";
@@ -114,6 +122,14 @@ class Chart extends React.Component {
     chart.scrollbarX = scrollbarX;
 
     this.chart = chart;
+
+    series.columns.template.events.on(
+      "hit",
+      function (ev) {
+        console.log(ev.target.dataItem.categories.categoryY);
+      },
+      this
+    );
   }
 
   componentWillUnmount() {
