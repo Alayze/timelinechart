@@ -1,0 +1,26 @@
+{
+  "name": "1wqty",
+  "version": "0.0.0",
+  "description": "hello world starter",
+  "keywords": [
+    "react",
+    "material"
+  ],
+  "homepage": "https://codesandbox.io/s/4j7m47vlm4",
+  "main": "index.js",
+  "dependencies": {
+    "@amcharts/amcharts4": "4.10.7",
+    "@material-ui/core": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
