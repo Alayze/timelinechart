@@ -11,86 +11,14 @@ var date2 = moment("2018-01-01 12:25:32", moment.ISO_8601).add(40, "hours");
 class Chart extends React.Component {
   componentDidMount() {
     let chart = am4core.create("chartdiv", am4charts.XYChart);
-
+    //chart.dataSource.updateCurrentData = true;
     chart.paddingRight = 20;
 
     chart.dateFormatter.inputDateFormat = "yyyy-MM-dd HH:mm";
 
     var colorSet = new am4core.ColorSet();
 
-    chart.data = [
-      {
-        machine: "MC101",
-        article: "D0TK103",
-        tg: "50",
-        count: 10,
-        fromDate: date1.toDate(),
-        toDate: date2.toDate(),
-        totalhours: 40,
-        color: colorSet.getIndex(0).brighten(0)
-      },
-      {
-        machine: "MC102",
-        fromDate: "2018-01-01 12:00",
-        toDate: "2018-01-01 15:00",
-        color: colorSet.getIndex(0).brighten(0.4)
-      },
-      {
-        machine: "MC109",
-        fromDate: "2018-01-01 15:30",
-        toDate: "2018-01-01 21:30",
-        color: colorSet.getIndex(0).brighten(0.8)
-      },
-
-      {
-        machine: "MC104",
-        fromDate: "2018-01-01 09:00",
-        toDate: "2018-01-01 12:00",
-        color: colorSet.getIndex(2).brighten(0)
-      },
-      {
-        machine: "MC105",
-        fromDate: "2018-01-01 13:00",
-        toDate: "2018-01-01 17:00",
-        color: colorSet.getIndex(2).brighten(0.4)
-      },
-
-      {
-        machine: "MC105",
-        fromDate: "2018-01-01 11:00",
-        toDate: "2018-01-01 16:00",
-        color: colorSet.getIndex(4).brighten(0)
-      },
-      {
-        machine: "MC105",
-        fromDate: "2018-01-01 16:00",
-        toDate: "2018-01-01 19:00",
-        color: colorSet.getIndex(4).brighten(0.4)
-      },
-
-      {
-        machine: "Melania",
-        fromDate: "2018-01-01 16:00",
-        toDate: "2018-01-01 20:00",
-        color: colorSet.getIndex(6).brighten(0)
-      },
-      {
-        machine: "Melania",
-        fromDate: "2018-01-01 20:30",
-        toDate: "2018-01-01 24:00",
-        color: colorSet.getIndex(6).brighten(0.4)
-      },
-
-      {
-        machine: "Donald",
-        article: "797001",
-        tg: "50",
-        count: "10",
-        fromDate: "2018-01-01 13:00",
-        toDate: "2018-01-02 24:00",
-        color: colorSet.getIndex(8).brighten(0)
-      }
-    ];
+    chart.data = this.props.data;
 
     var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm";
@@ -137,7 +65,9 @@ class Chart extends React.Component {
       this.chart.dispose();
     }
   }
-
+  componentDidUpdate(oldProps) {
+    this.chart.data = this.props.data;
+  }
   render() {
     return <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>;
   }
